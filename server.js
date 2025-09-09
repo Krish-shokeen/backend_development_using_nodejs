@@ -12,8 +12,31 @@ const app = express();
 
 // home route
 
-app.get("/",(req,res) =>{
+app.get("/hello",(req,res) =>{
     return res.send("<h1> Hello World<h1/>");
+});
+
+app.get("/about",(req,res) => {
+    //logic
+
+    return res.json({
+        users :[
+        {
+            id:1,
+            name:"tarun",
+        
+        
+        },
+        {
+            id:2,
+            name:"aryan",
+        },
+        {
+            id:3,
+            name:"krish",
+        },
+    ],
+});
 });
 
 app.listen(6969,() => {
