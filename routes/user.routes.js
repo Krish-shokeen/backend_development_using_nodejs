@@ -45,11 +45,9 @@ router.post("/store-user",async function(req,res) {
     
 })
 
+
+
 // api to fetch users
-
-
-
-
 router.get("/users", async(req,res) =>{
     try{
         const users =await User.find(); // array []
@@ -60,8 +58,9 @@ router.get("/users", async(req,res) =>{
 })
 
 
-// update single user
 
+
+// update single user api
 router.patch("/edit-user/:userId",async (req,res) =>{
     try{
         // logic
@@ -86,6 +85,35 @@ router.patch("/edit-user/:userId",async (req,res) =>{
         
     }
 })
+
+// delete user api
+
+router.delete("/delete-account/:userId",async (req,res) =>{
+    try{
+        // logic
+
+        // step 1
+        const{userId} = req.params;
+        // step 2
+        const deletedUser = await User.findByIdAndDelete(userId);
+
+        return res.json({
+            message : "User deleted successfully",
+            user : deletedUser
+        });
+    }catch(err){
+        console.log(err);
+    }
+});
+
+
+
+
+
+
+
+
+
 
 
 
