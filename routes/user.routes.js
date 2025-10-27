@@ -2,6 +2,8 @@
 
 const express = require("express");
 
+const bcrypt = require("bcryptjs");
+
 // import user module
 
 const User =require("../models/user.model");
@@ -23,12 +25,16 @@ router.post("/store-user",async function(req,res) {
 
         const {username, email,password}=req.body;
 
+
+        // hash the password
+        const hashedPassword = await bcrypt.hash(password,10); 
+
         // create new user
 
         const newUser = new User({
             username,
             email,
-            password,
+            password: hashedPassword,
         });
 
         // save newUser

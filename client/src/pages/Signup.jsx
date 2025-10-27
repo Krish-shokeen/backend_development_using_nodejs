@@ -16,11 +16,14 @@ const Signup = () => {
 
 
     // signup function
-    const signup = async() =>{
+    const signup = async(e) =>{
+        e.preventDefault(); // to prevent reloading of page
         try{
 
             // make api call 
-            const response =await axios.post("http://localhost:6969/api/store-user")
+            const response =await axios.post("http://localhost:6969/api/store-user",
+                {username,email,password} // data to be sent to backend
+            )
 
         }catch(err){
             console.log("err while signing up",err)
@@ -31,8 +34,8 @@ const Signup = () => {
     return (
     <div>
         <h1>Signup Page</h1>
-        
-        <form className='signup-form'>
+
+        <form onSubmit={signup} className='signup-form'>
             <input type="text" placeholder="Enter your username" onChange={(e) => setUsername(e.target.value)} />
             <input type="email" placeholder="Enter your email" onChange={(e) => setEmail(e.target.value)} />
             <input type="password" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)} />
