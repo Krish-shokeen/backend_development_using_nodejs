@@ -114,12 +114,49 @@ router.delete("/delete-account/:userId",async (req,res) =>{
 
 
 
+// api route to search for a user 
+
+router.get("/search-user",async (req,res) =>{
+    try{
+        // req.query 
+
+        // www.amazon.com/search?query=mobile
+
+        const{searchInput} = req.query;
+
+        const users = await User.find({
+            username : { $regex : searchInput, $options : "i" } // i -> case insensitive
+        });
 
 
+        // filtering logic
+        // const filteredUsers = users.filter((user,index) => 
+        //     user.username.toString().toLowerCase().includes(searchInput.toLowerCase())
+            
+        // );
 
+        return res.status(200).json({message : "User fetched : ", users});
+    }
+    catch(err){
+        console.log("error while searching a user",err.message);
+        return res.status(500).json({message : "Internal server error"});
+    }
+});
 
+// sort 
 
-
+router.get("/sort",async (req,res) =>{
+    try{
+        // sort users in ascending order based on username
+        const users = await User.find().sort({ username : 1}); 
+        // 1 -> ascending order, 
+        // -1 -> descending order
+        return res.status(200).json({ message : "Users sorted successfully in ascending order", users});
+    }catch(err){
+        console.log("error while sorting users", err.message);
+        return res.status(500).json({ message : "Internal server error"});
+    }
+});
 
 
 
